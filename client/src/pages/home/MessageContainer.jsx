@@ -6,16 +6,16 @@ import { getMessageThunk } from "../../store/slice/message/message.thunk";
 import SendMessage from "./SendMessage";
 
 const MessageContainer = () => {
-
   const dispatch = useDispatch();
   const { selectedUser } = useSelector((state) => state.userReducer);
   const { messages } = useSelector((state) => state.messageReducer);
 
+  // Fetch messages whenever selectedUser changes
   useEffect(() => {
     if (selectedUser?._id) {
-      dispatch(getMessageThunk({ recieverId: selectedUser?._id }));
+      dispatch(getMessageThunk({ recieverId: selectedUser._id }));
     }
-  }, [selectedUser]);
+  }, [selectedUser, dispatch]);
 
   return (
     <>
@@ -23,26 +23,27 @@ const MessageContainer = () => {
         <div className="w-full flex items-center justify-center flex-col gap-5">
           <h2>Welcome to GUP SHUP</h2>
           <p className="text-xl">Please select a person to continue your chat!!</p>
-          </div>
+        </div>
       ) : (
         <div className="h-screen w-full flex flex-col">
+          {/* Selected user header */}
           <div className="p-3 border-b border-b-white/10">
             <User userDetails={selectedUser} />
           </div>
 
-          <div className="h-full overflow-y-auto p-3">
-            {messages?.map((messageDetails) => {
-              return (
-                <Message
-                  key={messageDetails?._id}
-                  messageDetails={messageDetails}
-                />
-              );
-            })}
+          {/* Messages */}
+          <div className="h-full overflow-y-auto p-3 flex-1 flex flex-col gap-2">
+            {messages?.map((messageDetails) => (
+              <Message
+                key={messageDetails?._id}
+                messageDetails={messageDetails}
+                selectedUser={selectedUser}
+              />
+            ))}
           </div>
 
+          {/* Input */}
           <SendMessage />
-
         </div>
       )}
     </>

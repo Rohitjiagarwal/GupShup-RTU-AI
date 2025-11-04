@@ -6,12 +6,22 @@ import {
   getOtherUsersThunk,
   logoutUserThunk,
 } from "../../store/slice/user/user.thunk";
+import botAvatar from "../../assets/bot-avatar.jpeg";
 
 const UserSidebar = () => {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const { otherUsers, userProfile } = useSelector((state) => state.userReducer);
+
+  // Permanent Gupshup AI bot object
+  const chatbotUser = {
+     _id: "64f8b123456789abcdef1234", // unique fixed id
+    username: "gupshup_ai",
+    fullName: "Gupshup RTU AI",
+    avatar: botAvatar, // put an image in /public
+    isBot: true,
+  };
 
   const handleLogout = async () => {
     await dispatch(logoutUserThunk());
@@ -25,9 +35,7 @@ const UserSidebar = () => {
         otherUsers.filter((user) => {
           return (
             user.username.toLowerCase().includes(searchValue.toLowerCase()) ||
-            user.fullName
-              .toLowerCase()
-              .includes(searchValue.toLocaleLowerCase())
+            user.fullName.toLowerCase().includes(searchValue.toLowerCase())
           );
         })
       );
@@ -38,7 +46,7 @@ const UserSidebar = () => {
     (async () => {
       await dispatch(getOtherUsersThunk());
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="max-w-[20em] w-full h-screen flex flex-col border-r border-r-white/10">
@@ -58,12 +66,18 @@ const UserSidebar = () => {
         </label>
       </div>
 
+      {/* Users List */}
       <div className="h-full overflow-y-auto px-3 flex flex-col gap-2">
-        {users?.map((userDetails) => {
-          return <User key={userDetails?._id} userDetails={userDetails} />;
-        })}
+        {/* Always show Gupshup AI at the top */}
+        <User key={chatbotUser._id} userDetails={chatbotUser} />
+
+        {/* Show all other users */}
+        {users?.map((userDetails) => (
+          <User key={userDetails?._id} userDetails={userDetails} />
+        ))}
       </div>
 
+      {/* Bottom Profile + Logout */}
       <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-3">
           <div className="avatar">
