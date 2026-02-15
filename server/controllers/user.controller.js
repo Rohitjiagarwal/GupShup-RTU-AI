@@ -18,8 +18,10 @@ export const register = asyncHandler(async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const avatarType = gender === "male" ? "boy" : "girl";
-  const avatar = `https://avatar.iran.liara.run/public/${avatarType}?username=${username}`;
+  // --- CHANGED SECTION START ---
+  // Switched to DiceBear API because 'avatar.iran.liara.run' is returning 504 errors
+  const avatar = `https://api.dicebear.com/9.x/adventurer/svg?seed=${username}`;
+  // --- CHANGED SECTION END ---
 
   const newUser = await User.create({
     username,
@@ -55,7 +57,6 @@ export const register = asyncHandler(async (req, res, next) => {
       },
     });
 });
-
 export const login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 

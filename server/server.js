@@ -5,7 +5,7 @@ import { connectDB } from "./db/connection1.db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import geminiRoute from "./routes/gemini.route.js";
-
+import aiRoutes from "./routes/ai.routes.js";
 
 connectDB();
 
@@ -26,6 +26,7 @@ import messageRoute from "./routes/message.route.js";
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 app.use("/api/v1/gemini", geminiRoute);
+app.use("/api/v1/ai", aiRoutes);
 
 // middlwares
 import { errorMiddleware } from "./middlewares/error.middlware.js";
