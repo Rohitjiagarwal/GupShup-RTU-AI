@@ -16,7 +16,7 @@ const SendMessage = () => {
   const [isSending, setIsSending] = useState(false); // 🔥 Prevent double API calls
 
   // 👇 POINT THIS TO YOUR BACKEND SERVER PORT
-  const BACKEND_URL = "http://localhost:5000/api/v1/ai/chat"; 
+  const BACKEND_URL = "https://gupshup-rtu-ai.onrender.com/api/v1/ai/chat"; 
 
   // Personas (Kept for UI selection, but actual logic is now on backend)
   const personaPrompts = {
