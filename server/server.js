@@ -11,13 +11,14 @@ import geminiRoute from "./routes/gemini.route.js";
 import aiRoutes from "./routes/ai.routes.js";
 import { errorMiddleware } from "./middlewares/error.middlware.js";
 
+const app = express();
 // 1. Connect Database
 connectDB();
 
 // 2. CORS Configuration (More robust for Vercel/Render)
 const allowedOrigins = [
   "http://localhost:5173",               // Local development
-  "https://gup-shup-rtu-ai.vercel.app",  // Your exact Vercel URL
+  "https://gup-shup-rtu-ai-lmkt.vercel.app",  // Your exact Vercel URL
   process.env.CLIENT_URL                 // Fallback to env variable
 ].filter(Boolean); // Removes null/undefined values
 
