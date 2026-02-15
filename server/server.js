@@ -11,7 +11,6 @@ import geminiRoute from "./routes/gemini.route.js";
 import aiRoutes from "./routes/ai.routes.js";
 import { errorMiddleware } from "./middlewares/error.middlware.js";
 
-const app = express();
 // 1. Connect Database
 connectDB();
 
